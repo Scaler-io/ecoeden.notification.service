@@ -1,0 +1,13 @@
+﻿{
+  "profiles": {
+    "Ecoeden.Notification.Service": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}
