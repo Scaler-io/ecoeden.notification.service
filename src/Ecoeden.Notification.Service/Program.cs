@@ -1,7 +1,9 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using Ecoeden.Notification.Service;
+using Ecoeden.Notification.Service.BackgroundJobs;
+using Ecoeden.Notification.Service.Data;
 using Ecoeden.Notification.Service.DependencyInjections;
-using Ecoeden.Notification.Service.Extensions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -15,14 +17,22 @@ var host = Host.CreateDefaultBuilder(args)
         var serviceProvider = services.BuildServiceProvider();
         var configuration = serviceProvider.GetRequiredService<IConfiguration>();
         logger = Logging.GetLogger(configuration);
+
         services.ConfigurationSettings();
-        services.AddApplicationServices(configuration);
+        services.AddApplicationServices(configuration)
+                .AddDataServices(configuration);
+
+        services.AddHostedService<EventBusStarterJob>();
+        services.AddHostedService<EmailProcessingJob>();
+        
+
     }).UseSerilog(logger).Build();
 
+var dbContext = host.Services.GetRequiredService<NotificationDbContext>();
 
 try
 {
-    logger.Here().Information("App started");
+    await dbContext.Database.MigrateAsync();
     await host.RunAsync();
 }
 finally
