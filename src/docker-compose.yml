@@ -1,0 +1,12 @@
+version: '3.4'
+
+services:
+  ecoeden.notification.service:
+    image: ${DOCKER_REGISTRY-}ecoedennotificationservice
+    build:
+      context: .
+      dockerfile: Ecoeden.Notification.Service/Dockerfile
+
+networks:
+ ecoeden_dev_net:
+    external: true

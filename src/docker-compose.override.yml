@@ -1,0 +1,35 @@
+version: '3.4'
+
+services:
+  ecoeden.notification.service:
+    container_name: Ecoeden.Notification.Service
+    depends_on:
+      - rabbitmq
+      - identityDb
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+      - Logging__IncludeScopes=false
+      - "Logging__LogOutputTemplate=[{Timestamp:dd-MM-yyyy HH:mm:ss, fff}] {Level} {Properties} [CorrelationId:{CorrelationId}] [Machine: {MachineName}] {CallerType}:{MemberName} {Message}{NewLine}{Exception}{NewLine}"
+      - Logging__Console__Enabled=true
+      - Logging__Console__LogLevel=Debug
+      - Logging__Elastic__Enabled=true
+      - Logging__Elastic__LogLevel=Debug
+      - AppConfigurations__ApplicationIdentifier=Ecoeden.Notification.Service
+      - AppConfigurations__ApplicationEnvironment=Docker
+      - AppConfigurations__NotificationProcessInterval=5
+      - AppConfigurations__IntervalUnit=ss
+      - InfrastructureSettings__identityBaseUrl=http://Ecoeden.IdentityServer
+      - Elasticsearch__Uri=http://elasticsearch:9200
+      - EventBus__Host=rabbitmq
+      - EventBus__Username=guest
+      - EventBus__Password=guest
+      - EmailTemplates__UserInivite=UserInvitationSent
+      - EmailSettings__Server=sandbox.smtp.mailtrap.io
+      - EmailSettings__Port=25
+      - EmailSettings__CompanyAddress=support@ecoeden.com
+      - EmailSettings__UserName=d006a8f49fc8af
+      - EmailSettings__Password=254ee1344efe4b
+      - ConnectionStrings__DefaultConnection=Server=identityDb:5432;Database=NotificationDb;User Id=ecoeden_notificationsvc;Password=admin1234;
+    networks:
+        - ecoeden_dev_net
+    
