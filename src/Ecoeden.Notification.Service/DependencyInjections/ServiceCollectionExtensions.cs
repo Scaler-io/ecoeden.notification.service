@@ -5,6 +5,7 @@ using Ecoeden.Notification.Service.Configurations;
 using Ecoeden.Notification.Service.EventBus.Consumers;
 using MassTransit.Definition;
 using Ecoeden.Notification.Service.Services;
+using GreenPipes;
 
 namespace Ecoeden.Notification.Service.DependencyInjections
 {
