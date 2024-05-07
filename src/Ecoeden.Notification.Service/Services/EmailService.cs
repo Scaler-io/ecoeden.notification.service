@@ -39,7 +39,7 @@ namespace Ecoeden.Notification.Service.Services
 
             foreach (var notification in notificationsToProcess)
             {
-                _logger.Here().Information("Messgae processing {@subject}", notification.Subject);
+                _logger.Here().Information("Message processing {@subject}", notification.Subject);
                 var mail = ProcessMessage(notification);
                 try
                 {

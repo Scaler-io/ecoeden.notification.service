@@ -3,9 +3,6 @@ version: '3.4'
 services:
   ecoeden.notification.service:
     container_name: Ecoeden.Notification.Service
-    depends_on:
-      - rabbitmq
-      - identityDb
     environment:
       - ASPNETCORE_ENVIRONMENT=Docker
       - Logging__IncludeScopes=false

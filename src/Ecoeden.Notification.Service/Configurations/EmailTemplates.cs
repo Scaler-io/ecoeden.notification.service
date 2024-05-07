@@ -4,5 +4,6 @@
     {
         public const string OptionName = "EmailTemplates";
         public string UserInivite { get; set; }
+        public string UserPassword { get; set; }
     }
 }
